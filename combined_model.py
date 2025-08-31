@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score, average_precision_score
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report,roc_auc_score, average_precision_score
 import xgboost as xgb
 import shap
 import matplotlib.pyplot as plt
@@ -11,6 +11,7 @@ import os
 from imblearn.over_sampling import SMOTE
 from sklearn.feature_selection import SelectKBest, f_classif
 import warnings
+
 warnings.filterwarnings("ignore", category=UserWarning)
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -53,7 +54,8 @@ def train_model(X_train, y_train):
         objective='binary:logistic',
         random_state=42,
         eval_metric='logloss',
-        scale_pos_weight=np.sqrt(len(y_train_res[y_train_res == 0]) / len(y_train_res[y_train_res == 1]))
+        scale_pos_weight=np.sqrt(len(y_train_res[y_train_res == 0]) /
+                                 len(y_train_res[y_train_res == 1]))
     )
     grid_search = GridSearchCV(
         estimator=model,
