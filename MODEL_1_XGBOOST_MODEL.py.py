@@ -109,17 +109,17 @@ def explain_model(model, X_train, X_test, feature_names):
     plt.show()
 
 
-def save_artifacts(model, scaler, feature_names):
-    import datetime
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    artifacts = {
-        'model': model,
-        'scaler': scaler,
-        'feature_names': feature_names,
-        'timestamp': timestamp
-    }
-    joblib.dump(artifacts, f'diabetes_model_{timestamp}.pkl')
-    print(f"\nArtifacts saved as diabetes_model_{timestamp}.pkl")
+# def save_artifacts(model, scaler, feature_names):
+#     import datetime
+#     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+#     artifacts = {
+#         'model': model,
+#         'scaler': scaler,
+#         'feature_names': feature_names,
+#         'timestamp': timestamp
+#     }
+#     joblib.dump(artifacts, f'diabetes_model_{timestamp}.pkl')
+#     print(f"\nArtifacts saved as diabetes_model_{timestamp}.pkl")
 
 
 def predict_custom_input(model, scaler, feature_names):
@@ -162,7 +162,7 @@ def main():
     model = train_model(X_train_scaled, y_train)
     evaluate_model(model, X_test_scaled, y_test)
     explain_model(model, X_train_scaled, X_test_scaled, feature_names)
-    save_artifacts(model, scaler, feature_names)
+    # save_artifacts(model, scaler, feature_names)
     predict_custom_input(model, scaler, feature_names)
 
 

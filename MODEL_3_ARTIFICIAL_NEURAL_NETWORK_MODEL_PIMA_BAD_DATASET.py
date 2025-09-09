@@ -1,3 +1,4 @@
+#  TRAINING ON PIMA DATASET
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
