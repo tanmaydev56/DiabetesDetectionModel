@@ -24,3 +24,7 @@ From classic ML to modern deep-learning + attention, every experiment is fully r
    ```bash
    git clone https://github.com/&lt;user&gt;/DiabetesDetectionModel.git
    cd DiabetesDetectionModel
+
+
+<img width="1312" height="236" alt="image" src="https://github.com/user-attachments/assets/80ef8768-bc1d-45ef-ac69-f1876138461d" />
+
