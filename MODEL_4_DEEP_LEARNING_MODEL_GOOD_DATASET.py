@@ -114,19 +114,19 @@ shap.force_plot(explainer.expected_value, shap_values[0], patient.iloc[0])
 model.save('diabetes_model.h5')
 joblib.dump(scaler, 'age_scaler.pkl')
 # # Optional: Run this at the end of the script for custom prediction
-def custom_test():
-    print("\n🧪 Enter patient details:")
-    age = float(input("Age (20–100): "))
-    age_scaled = (age - 20) / 80.0
-    inputs = [age_scaled]
-    questions = qs[1:]
-    for q in questions:
-        ans = input(f"{q} (Yes/No): ").strip().lower()
-        inputs.append(1 if ans == 'yes' else 0)
-    inputs = np.array([inputs], dtype=np.float32)
-    prob = model.predict(inputs)[0][0]
-    print(f"\n🔴 High Risk" if prob >= 0.5 else f"🟢 Low Risk",
-          f"– probability: {prob*100:.1f}%")
+# def custom_test():
+#     print("\n🧪 Enter patient details:")
+#     age = float(input("Age (20–100): "))
+#     age_scaled = (age - 20) / 80.0
+#     inputs = [age_scaled]
+#     questions = qs[1:]
+#     for q in questions:
+#         ans = input(f"{q} (Yes/No): ").strip().lower()
+#         inputs.append(1 if ans == 'yes' else 0)
+#     inputs = np.array([inputs], dtype=np.float32)
+#     prob = model.predict(inputs)[0][0]
+#     print(f"\n🔴 High Risk" if prob >= 0.5 else f"🟢 Low Risk",
+#           f"– probability: {prob*100:.1f}%")
 
 # Run the live test
-custom_test()
+# custom_test()
