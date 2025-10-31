@@ -1,28 +1,39 @@
-# Ignore Python cache and compiled files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
+# Hyperparameter tuning directories
+catboost_info/
+diabetes_tuner/
+keras_tuner/
+keras_tuner_dir/
+keras_tuner_results/
 
-# Ignore virtual environments
-.venv/
-env/
-venv/
-
-# Ignore model files
-models/
+# Model training artifacts (if not already included)
+*.h5
 *.pkl
+*.joblib
+model_artifacts.pkl
+diabetes_artifacts.pkl
+diabetes_model_artifacts.pkl
 
-# Ignore IDE/editor-specific settings
+# Large dataset files (if they're large)
+diabetes_prediction_dataset.csv
+diabetes_data_upload.csv
+pima.csv
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE files
 .idea/
 .vscode/
+*.swp
+*.swo
 
-# Ignore CSV and data files
-*.csv
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Ignore system files
+# OS files
 .DS_Store
 Thumbs.db
-
-# Ignore logs
-*.log
