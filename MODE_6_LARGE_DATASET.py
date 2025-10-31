@@ -7,6 +7,7 @@ import seaborn as sns
 
 from sklearn.model_selection import train_test_split, StratifiedKFold
 from sklearn.preprocessing import StandardScaler
+from sklearn.impute import SimpleImputer  # Added for missing value handling
 from sklearn.utils import class_weight
 from sklearn.metrics import (accuracy_score, precision_score, recall_score,
                              f1_score, roc_auc_score, confusion_matrix,
@@ -18,11 +19,13 @@ from sklearn.base import BaseEstimator, TransformerMixin
 import tensorflow as tf
 from tensorflow.keras import layers, models, optimizers, losses, callbacks
 import warnings
+
 warnings.filterwarnings('ignore')
 
 # Optional: SMOTE
 try:
     from imblearn.over_sampling import SMOTE
+
     SMOTE_AVAILABLE = True
 except Exception:
     SMOTE_AVAILABLE = False
@@ -302,7 +305,7 @@ def evaluate_with_threshold(model, X_test, y_test):
 
     # Confusion matrix plot
     cm = confusion_matrix(y_test, y_pred_opt)
-    plt.figure(figsize=(6,4))
+    plt.figure(figsize=(6, 4))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
     plt.title('Confusion Matrix (optimized threshold)')
     plt.xlabel('Predicted')
@@ -324,6 +327,10 @@ def evaluate_with_threshold(model, X_test, y_test):
 if __name__ == "__main__":
     # load dataset (adapt filename)
     df = pd.read_csv('diabetes_prediction_dataset.csv')  # replace with your filename
+
+    # Check for missing values before preprocessing
+    print("Missing values in dataset:")
+    print(df.isnull().sum())
 
     # quick preprocessing for the sample dataset you showed
     # map gender
@@ -351,6 +358,16 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20,
                                                         stratify=y, random_state=42)
 
+    # === CRITICAL FIX: Impute missing values before scaling and SMOTE ===
+    print("\nImputing missing values...")
+    imputer = SimpleImputer(strategy='mean')  # You can also use 'median' or 'most_frequent'
+    X_train = imputer.fit_transform(X_train)
+    X_test = imputer.transform(X_test)
+
+    # Verify no missing values remain
+    print("Missing values in training set after imputation:", np.isnan(X_train).sum())
+    print("Missing values in test set after imputation:", np.isnan(X_test).sum())
+
     # scale
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
@@ -366,5 +383,6 @@ if __name__ == "__main__":
     # save artifacts
     best_model.save('best_model_smote.h5')
     joblib.dump(scaler, 'scaler_smote.pkl')
+    joblib.dump(imputer, 'imputer.pkl')  # Save the imputer for future use
 
-    print("\nDone. Model and scaler saved.")
+    print("\nDone. Model, scaler, and imputer saved.")
